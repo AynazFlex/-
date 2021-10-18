@@ -8,24 +8,13 @@ document.addEventListener('click', (event) => {
   }
 
   if(clck.className == 'delete') {
-    clck.parentNode.remove();
-    event.preventDefault();
+    clck.closest('.zam').remove();
   }
 
-  if(clck.className == 'zam' || clck.className == 'zam close-zam') {
-    if(event.defaultPrevented) return;
-    clck.classList.toggle('close-zam');
-    clck.querySelector('.delete').classList.toggle('close');
-  }
-
-  if(clck.className == 'zagg') {
-    clck.parentNode.classList.toggle('close-zam');
-    clck.parentNode.querySelector('.delete').classList.toggle('close');
-  }
-
-  if(clck.className == 'p-text') {
-    clck.parentNode.classList.toggle('close-zam');
-    clck.parentNode.querySelector('.delete').classList.toggle('close');
+  if(clck.closest('.zam')) {
+    clck.closest('.zam').classList.toggle('close-zam');
+    clck.closest('.zam').querySelector('.delete').classList.toggle('close');
+    clck.closest('.zam').querySelector('.edit').classList.toggle('close');
   }
 });
 
@@ -43,6 +32,7 @@ document.body.querySelector('.vvod').onclick = function(event) {
     let div = document.createElement('div');
     div.classList.add('zam');
     let button = document.createElement('img');
+    let edit = document.createElement('img');
     let zag = document.createElement('h3');
     let p = document.createElement('p');
     let t = document.createElement('span');
@@ -51,12 +41,20 @@ document.body.querySelector('.vvod').onclick = function(event) {
     zag.classList.add('zagg');
     button.classList.add('delete');
     button.classList.add('close');
+    edit.classList.add('edit');
+    edit.classList.add('close');
+    edit.src = 'edit.svg';
     button.src = 'delete.svg';
-    zag.textContent = document.body.querySelector('.name').value;
-    p.textContent = document.body.querySelector('.main-text').value;
-    t.textContent = `Время ${date.getHours()}:${date.getMinutes()} Дата ${date.getFullYear()}.${date.getMonth()+1}`;
+    if(document.body.querySelector('.name').value == '') {
+      zag.textContent = 'Без название';
+    } else {
+      zag.textContent = document.body.querySelector('.name').value;
+    }
+    p.innerHTML = document.body.querySelector('.main-text').value;
+    t.textContent = `Время ${date.getHours()}:${date.getMinutes()} Дата ${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`;
     div.prepend(t);
     div.prepend(button);
+    div.prepend(edit);
     div.prepend(p);
     div.prepend(zag);
     zam.prepend(div);
