@@ -28,7 +28,7 @@ document.addEventListener('pointerdown', (event) => {
     document.onpointermove = (event) => {
       if(event.clientX - x < 10) {
         elem.style.left = -62 + 'px';
-        elem.closest('.zam').remove();
+        elem.remove();
       }
       if(event.clientX - x > 10) {
         elem.style.left = 62 + 'px';
