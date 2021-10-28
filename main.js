@@ -33,8 +33,7 @@ document.addEventListener('pointerdown', function(event) {
         elem.remove();
       }
     }
-    console.log(new Date()-data);
-    if(new Date()-data > 1000) {
+    if(Date.now()-data > 1000) {
       elem.style.left = 62 + 'px';
     }
   }
