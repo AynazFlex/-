@@ -22,7 +22,7 @@ document.body.querySelector('.new-zametka').addEventListener('click', () => {
 });
 
 document.addEventListener('pointerdown', function(event) {
-  let data = new Date();
+  let data = Date.now();
   let x = event.clientX;
   let down = event.target;
   if(down.closest('.zam')) {
