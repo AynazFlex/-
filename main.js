@@ -28,11 +28,11 @@ document.addEventListener('pointerdown', function(event) {
     let elem = down.closest('.zam');
     document.onpointermove = function(event) {
       console.log(event.clientX - x);
-      if(event.clientX - x < -10) {
+      if(event.clientX - x < -5) {
         elem.style.left = -62 + 'px';
-        setTimeout(() => elem.remove(), 300);
+        setTimeout(() => elem.remove(), 500);
       }
-      if(event.clientX - x > 10) {
+      if(event.clientX - x > 5) {
         elem.style.left = 62 + 'px';
       }
     }
