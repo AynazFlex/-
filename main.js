@@ -22,23 +22,20 @@ document.body.querySelector('.new-zametka').addEventListener('click', () => {
 });
 
 document.addEventListener('pointerdown', function(event) {
+  let data = new Date();
   let x = event.clientX;
   let down = event.target;
   if(down.closest('.zam')) {
     let elem = down.closest('.zam');
     document.onpointermove = function(event) {
-      console.log(event.clientX - x);
       if(event.clientX - x < -5) {
         elem.style.left = -62 + 'px';
         elem.remove();
       }
-      if(event.clientX - x > 5) {
-        elem.style.left = 62 + 'px';
-      }
     }
-    document.onpointerup = () => {
-      elem.style.left = 0 + 'px';
-      document.onpointermove = null;
+    console.log(new Date()-data);
+    if(new Date().getSeconds()-data.getSeconds() > 1) {
+      elem.style.left = 62 + 'px';
     }
   }
   document.ondragstart = function() {
