@@ -3,6 +3,7 @@
 document.body.querySelector('.vashi-zametki').addEventListener('click', addclick);
 
 function addclick(event) {
+  
   let clck = event.target;
 
   if(clck.className == 'delete') {
@@ -27,8 +28,9 @@ document.addEventListener('pointerdown', function(event) {
     let elem = down.closest('.zam');
     document.onpointermove = function(event) {
       console.log(event.clientX - x);
-      if(event.clientX - x < 10) {
+      if(event.clientX - x < -10) {
         elem.style.left = -62 + 'px';
+        elem.remove();
       }
       if(event.clientX - x > 10) {
         elem.style.left = 62 + 'px';
@@ -43,7 +45,7 @@ document.addEventListener('pointerdown', function(event) {
     return false;
   };
 
-})
+});
 
 document.body.querySelector('.vvod').onclick = function(event) {
   let elem = event.target;
