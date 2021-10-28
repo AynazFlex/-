@@ -35,7 +35,7 @@ document.addEventListener('pointermove', (event) => {
   document.ondragstart = function() {
     return false;
   };
-})
+});
 
 document.body.querySelector('.vvod').onclick = function(event) {
   let elem = event.target;
