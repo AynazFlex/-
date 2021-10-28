@@ -23,6 +23,7 @@ document.body.querySelector('.new-zametka').addEventListener('click', () => {
 
 document.addEventListener('pointerdown', function(event) {
   let data = Date.now();
+  console.log(data);
   let x = event.clientX;
   let down = event.target;
   if(down.closest('.zam')) {
@@ -33,8 +34,12 @@ document.addEventListener('pointerdown', function(event) {
         elem.remove();
       }
     }
-    if(Date.now()-data > 1000) {
-      elem.style.left = 62 + 'px';
+    document.onpointerup = () => {
+      let data1 = Date.now();
+      console.log(data1);
+      if(data1-data > 1000) {
+        elem.style.left = 62 + 'px';
+      }
     }
   }
   document.ondragstart = function() {
