@@ -34,7 +34,7 @@ document.addEventListener('pointerdown', function(event) {
       }
     }
     console.log(new Date()-data);
-    if(new Date().getSeconds()-data.getSeconds() > 1) {
+    if(new Date().getSeconds()-data.getSeconds() > 1000) {
       elem.style.left = 62 + 'px';
     }
   }
