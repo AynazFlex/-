@@ -30,7 +30,7 @@ document.addEventListener('pointerdown', function(event) {
       console.log(event.clientX - x);
       if(event.clientX - x < -10) {
         elem.style.left = -62 + 'px';
-        elem.remove();
+        setTimeout(() => elem.remove(), 300);
       }
       if(event.clientX - x > 10) {
         elem.style.left = 62 + 'px';
