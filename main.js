@@ -26,10 +26,11 @@ document.addEventListener('pointerdown', (event) => {
   if(down.closest('.zam')) {
     let elem = down.closest('.zam');
     document.onpointermove = (event) => {
-      if(event.clientX - x < 20) {
+      if(event.clientX - x < 10) {
         elem.style.left = -62 + 'px';
+        elem.closest('.zam').remove();
       }
-      if(event.clientX - x > 20) {
+      if(event.clientX - x > 10) {
         elem.style.left = 62 + 'px';
       }
     }
