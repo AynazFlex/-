@@ -1,11 +1,9 @@
 "use strict"
 
-document.addEventListener('click', (event) => {
-  let clck = event.target;
+document.body.querySelector('.vashi-zametki').addEventListener('click', addclick);
 
-  if(clck.className == 'new-zametka') {
-    document.body.querySelector('.vvod').style.display = 'flex';
-  }
+function addclick(event) {
+  let clck = event.target;
 
   if(clck.className == 'delete') {
     clck.closest('.zam').remove();
@@ -16,7 +14,32 @@ document.addEventListener('click', (event) => {
     clck.closest('.zam').querySelector('.delete').classList.toggle('close');
     clck.closest('.zam').querySelector('.edit').classList.toggle('close');
   }
+};
+
+document.body.querySelector('.new-zametka').addEventListener('click', () => {
+  document.body.querySelector('.vvod').style.display = 'flex';
 });
+
+document.addEventListener('pointerdown', (event) => {
+  let x = event.clientX;
+  let down = event.target;
+  if(down.closest('.zam')) {
+    let elem = down.closest('.zam');
+    document.onpointermove = (event) => {
+      if(down.closest('.zam')) {
+        elem.style.left = event.clientX - x + 'px';
+      }
+    }
+    document.onpointerup = () => {
+      elem.style.left = 0 + 'px';
+      document.onpointermove = null;
+    }
+  }
+  document.ondragstart = function() {
+    return false;
+  };
+
+})
 
 document.body.querySelector('.vvod').onclick = function(event) {
   let elem = event.target;
