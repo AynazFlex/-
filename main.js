@@ -20,29 +20,21 @@ document.body.querySelector('.new-zametka').addEventListener('click', () => {
   document.body.querySelector('.vvod').style.display = 'flex';
 });
 
-document.addEventListener('pointerdown', (event) => {
+document.addEventListener('pointermove', (event) => {
   let x = event.clientX;
   let down = event.target;
   if(down.closest('.zam')) {
     let elem = down.closest('.zam');
-    document.onpointermove = (event) => {
-      if(event.clientX - x < 10) {
-        elem.style.left = -62 + 'px';
-        elem.remove();
-      }
-      if(event.clientX - x > 10) {
-        elem.style.left = 62 + 'px';
-      }
+    if(event.clientX - x < 10) {
+      elem.style.left = -62 + 'px';
     }
-    document.onpointerup = () => {
-      elem.style.left = 0 + 'px';
-      document.onpointermove = null;
+    if(event.clientX - x > 10) {
+      elem.style.left = 62 + 'px';
     }
   }
   document.ondragstart = function() {
     return false;
   };
-
 })
 
 document.body.querySelector('.vvod').onclick = function(event) {
