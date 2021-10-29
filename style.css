@@ -168,3 +168,17 @@ body {
 .edit:hover {
   cursor: pointer;
 }
+
+@keyframes del {
+  from {
+    left: 0;
+  }
+  to {
+    left: -62px;
+  }
+}
+
+.anim {
+  animation-name: del;
+  animation-duration: 0.5s;
+}

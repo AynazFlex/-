@@ -35,7 +35,7 @@ document.addEventListener('pointerdown', function(event) {
     document.onpointermove = function(event) {
       if(event.clientX - x < -10) {
         setTimeout(() => elem.remove(), 500);
-        elem.style.left = -62 + 'px';
+        elem.classList.add('anim');
       }
     }
   }
