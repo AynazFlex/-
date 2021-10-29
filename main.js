@@ -42,10 +42,11 @@ document.addEventListener('pointerdown', function(event) {
     }, 2000);
     document.onpointermove = function(event) {
       if(event.clientX - x < -10) {
+        clearTimeout(data);
         elem.style.left = -62 + 'px';
         elem.remove();
       }
-      if(event.clientY - y) {
+      if(event.clientY - y > -3 && event.clientY - y < 3) {
         clearTimeout(data);
       }
     }
