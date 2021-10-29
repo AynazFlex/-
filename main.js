@@ -20,6 +20,7 @@ function addclick(event) {
 document.body.querySelector('.new-zametka').addEventListener('click', () => {
   document.body.querySelector('.vvod').style.display = 'flex';
   for(let elem of document.body.querySelectorAll('.zam')) {
+    elem.style.left = 0 +'px';
     elem.classList.remove('close-zam');
     elem.querySelector('.delete').classList.add('close');
     elem.querySelector('.edit').classList.add('close');
@@ -28,30 +29,14 @@ document.body.querySelector('.new-zametka').addEventListener('click', () => {
 
 document.addEventListener('pointerdown', function(event) {
   let x = event.clientX;
-  let y = event.clientY;
   let down = event.target;
   if(down.closest('.zam')) {
     let elem = down.closest('.zam');
-    let data = setTimeout(() => {
-      for(let elem of document.body.querySelectorAll('.zam')) {
-        elem.style.left = 62 + 'px';
-        elem.classList.remove('close-zam');
-        elem.querySelector('.delete').classList.add('close');
-        elem.querySelector('.edit').classList.add('close');
-      }
-    }, 2000);
     document.onpointermove = function(event) {
       if(event.clientX - x < -10) {
-        clearTimeout(data);
+        setTimeout(() => elem.remove(), 500);
         elem.style.left = -62 + 'px';
-        elem.remove();
       }
-      if(event.clientY - y > -3 && event.clientY - y < 3) {
-        clearTimeout(data);
-      }
-    }
-    document.onpointerup = () => {
-      clearTimeout(data);
     }
   }
   document.ondragstart = function() {

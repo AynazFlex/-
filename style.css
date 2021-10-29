@@ -45,6 +45,7 @@ body {
   border-bottom: 2px solid black;
   background-color: white;
   overflow: hidden;
+  transition: 0.5s;
 }
 
 .vvod {
