@@ -107,10 +107,10 @@ body {
 
 .delete {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  height: 30px;
-  width: 30px;
+  top: 0px;
+  right: 0px;
+  height: 25px;
+  width: 25px;
 }
 
 .delete:hover {
@@ -142,12 +142,18 @@ body {
 .time {
   position: absolute;
   left: 0;
+  right: 0;
+  margin: auto;
+  width: 200px;
+  text-align: center;
   top: 0;
-  padding: 2px;
+  padding: 3px;
+  border-radius: 0 0 10px 10px;
   border: 1px solid black;
   font-size: 14px;
-  background-color: white;
-  z-index: 999;
+  background-color: black;
+  color: white;
+  z-index: 1;
 }
 
 .edit {
