@@ -1,5 +1,7 @@
 "use strict"
 
+let elem1;
+
 document.body.querySelector('.vashi-zametki').addEventListener('click', addclick);
 
 function addclick(event) {
@@ -12,7 +14,9 @@ function addclick(event) {
 
   if(clck.className == "edit") {
     document.body.querySelector('.vvod-red').style.display = 'flex';
-    red(this);
+    elem1 = clck.parentNode;
+    document.body.querySelector('.main-text-red').value = elem1.querySelector('.p-text').textContent;
+    document.body.querySelector('.name-red').value = elem1.querySelector('.zagg').textContent;
   }
 
   if(clck.closest('.zam') && !(clck.className == "edit")) {
@@ -25,7 +29,6 @@ function addclick(event) {
 document.body.querySelector('.new-zametka').addEventListener('click', () => {
   document.body.querySelector('.vvod').style.display = 'flex';
   for(let elem of document.body.querySelectorAll('.zam')) {
-    elem.style.left = 0 +'px';
     elem.classList.remove('close-zam');
     elem.querySelector('.delete').classList.add('close');
     elem.querySelector('.edit').classList.add('close');
@@ -94,24 +97,23 @@ document.body.querySelector('.vvod').addEventListener('click', function(event) {
     document.body.querySelector('.name').value = '';
   }
 })
-function red(elem1) {
-  document.body.querySelector('.main-text-red').value = elem1.querySelector('.p-text').textContent;
-  document.body.querySelector('.name-red').value = elem1.querySelector('.zagg').textContent;
-  document.body.querySelector('.vvod-red').addEventListener('click', function(event) {
-    let elem = event.target;
 
-    if(elem.className == 'otmen-red') {
-      document.body.querySelector('.vvod-red').style.display = 'none';
-    }
+document.body.querySelector('.vvod-red').addEventListener('click', function(event) {
+  let elem = event.target;
 
-    if(elem.className == 'vvod-data-red') {
-      document.body.querySelector('.vvod-red').style.display = 'none';
-      if(document.body.querySelector('.name-red').value == '') {
-        elem1.querySelector('.zagg').textContent = 'Без название';
-      } else {
-        elem1.querySelector('.zagg').textContent = document.body.querySelector('.name-red').value;
-      }
-      elem1.querySelector('.p-text').textContent = document.body.querySelector('.main-text-red').value;
+  if(elem.className == 'otmen-red') {
+     document.body.querySelector('.vvod-red').style.display = 'none';
+  }
+
+  if(elem.className == 'vvod-data-red') {
+    document.body.querySelector('.vvod-red').style.display = 'none';
+    if(document.body.querySelector('.name-red').value == '') {
+      elem1.querySelector('.zagg').textContent = 'Без название';
+    } else {
+      elem1.querySelector('.zagg').textContent = document.body.querySelector('.name-red').value;
     }
+    elem1.querySelector('.p-text').textContent = document.body.querySelector('.main-text-red').value;
+    document.body.querySelector('.name-red').value = '';
+    document.body.querySelector('.main-text-red').value = '';
+  }
 })
-}
