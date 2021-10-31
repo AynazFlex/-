@@ -10,7 +10,12 @@ function addclick(event) {
     clck.closest('.zam').remove();
   }
 
-  if(clck.closest('.zam')) {
+  if(clck.className == "edit") {
+    document.body.querySelector('.vvod-red').style.display = 'flex';
+    red(this);
+  }
+
+  if(clck.closest('.zam') && !(clck.className == "edit")) {
     clck.closest('.zam').classList.toggle('close-zam');
     clck.closest('.zam').querySelector('.delete').classList.toggle('close');
     clck.closest('.zam').querySelector('.edit').classList.toggle('close');
@@ -45,7 +50,7 @@ document.addEventListener('pointerdown', function(event) {
 
 });
 
-document.body.querySelector('.vvod').onclick = function(event) {
+document.body.querySelector('.vvod').addEventListener('click', function(event) {
   let elem = event.target;
   let date = new Date();
 
@@ -88,4 +93,25 @@ document.body.querySelector('.vvod').onclick = function(event) {
     document.body.querySelector('.main-text').value = '';
     document.body.querySelector('.name').value = '';
   }
+})
+function red(elem1) {
+  document.body.querySelector('.main-text-red').value = elem1.querySelector('.p-text').textContent;
+  document.body.querySelector('.name-red').value = elem1.querySelector('.zagg').textContent;
+  document.body.querySelector('.vvod-red').addEventListener('click', function(event) {
+    let elem = event.target;
+
+    if(elem.className == 'otmen-red') {
+      document.body.querySelector('.vvod-red').style.display = 'none';
+    }
+
+    if(elem.className == 'vvod-data-red') {
+      document.body.querySelector('.vvod-red').style.display = 'none';
+      if(document.body.querySelector('.name-red').value == '') {
+        elem1.querySelector('.zagg').textContent = 'Без название';
+      } else {
+        elem1.querySelector('.zagg').textContent = document.body.querySelector('.name-red').value;
+      }
+      elem1.querySelector('.p-text').textContent = document.body.querySelector('.main-text-red').value;
+    }
+})
 }
