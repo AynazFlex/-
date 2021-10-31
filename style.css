@@ -41,7 +41,7 @@ body {
   margin-top: 10px;
   margin-left: 10px;
   margin-right: 10px;
-  height: 60px;
+  height: 80px;
   border-bottom: 2px solid black;
   background-color: white;
   overflow: hidden;
@@ -180,5 +180,19 @@ body {
 
 .anim {
   animation-name: del;
+  animation-duration: 0.5s;
+}
+
+@keyframes rightto {
+  from {
+    left: 0;
+  }
+  to {
+    left: 62px;
+  }
+}
+
+.anim1 {
+  animation-name: rightto;
   animation-duration: 0.5s;
 }
