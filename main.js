@@ -46,6 +46,9 @@ document.addEventListener('touchstart', function(event) {
       if(l < 0) {
         elem.style.left = l + 'px';
       }
+      if(l < -60) {
+        elem.style.backgroundColor = 'red';
+      } else elem.style.backgroundColor = "";
     }
     document.ontouchend = function() {
       document.ontouchmove = null;
