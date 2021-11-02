@@ -35,15 +35,25 @@ document.body.querySelector('.new-zametka').addEventListener('click', () => {
   }
 });
 
-document.addEventListener('pointerdown', function(event) {
+document.addEventListener('touchdown', function(event) {
   let x = event.clientX;
   let down = event.target;
+  let l;
   if(down.closest('.zam')) {
     let elem = down.closest('.zam');
+    console.log('yes');
     document.onpointermove = function(event) {
-      if(event.clientX - x < -10) {
-        setTimeout(() => elem.remove(), 500);
-        elem.classList.add('anim');
+      l = event.clientX - x;
+      if(event.clientX - x < 0) {
+        elem.style.left = event.clientX - x + 'px';
+      }
+    }
+    document.ontouchend = function(event) {
+      document.onpointermove = null;
+      if(l < -100) {
+        elem.remove();
+      } else {
+        elem.style.left = "";
       }
     }
   }
@@ -102,11 +112,12 @@ document.body.querySelector('.vvod-red').addEventListener('click', function(even
   let elem = event.target;
 
   if(elem.className == 'otmen-red') {
-     document.body.querySelector('.vvod-red').style.display = 'none';
+    document.body.querySelector('.name-red').value = '';
+    document.body.querySelector('.main-text-red').value = '';
+    document.body.querySelector('.vvod-red').style.display = 'none';
   }
 
   if(elem.className == 'vvod-data-red') {
-    document.body.querySelector('.vvod-red').style.display = 'none';
     if(document.body.querySelector('.name-red').value == '') {
       elem1.querySelector('.zagg').textContent = 'Без название';
     } else {
@@ -115,5 +126,6 @@ document.body.querySelector('.vvod-red').addEventListener('click', function(even
     elem1.querySelector('.p-text').textContent = document.body.querySelector('.main-text-red').value;
     document.body.querySelector('.name-red').value = '';
     document.body.querySelector('.main-text-red').value = '';
+    document.body.querySelector('.vvod-red').style.display = 'none';
   }
 })
