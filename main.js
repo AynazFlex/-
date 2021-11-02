@@ -35,21 +35,21 @@ document.body.querySelector('.new-zametka').addEventListener('click', () => {
   }
 });
 
-document.addEventListener('pointerdown', function(event) {
-  let x = event.clientX;
+document.addEventListener('touchstart', function(event) {
+  let x = event.changedTouches[0].clientX;
   let down = event.target;
   let l;
   if(down.closest('.zam')) {
     let elem = down.closest('.zam');
-    document.onpointermove = function(event) {
-      l = event.clientX - x;
-      if(event.clientX - x < 0) {
-        elem.style.left = event.clientX - x + 'px';
+    document.ontouchmove = function(event) {
+      l = event.changedTouches[0].clientX - x;
+      if(l < 0) {
+        elem.style.left = l + 'px';
       }
     }
     document.ontouchend = function() {
-      document.onpointermove = null;
-      if(l < -10) {
+      document.ontouchmove = null;
+      if(l < -60) {
         elem.remove();
       } else {
         elem.style.left = "";
