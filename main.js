@@ -10,6 +10,7 @@ function addclick(event) {
 
   if(clck.className == 'delete') {
     clck.closest('.zam').remove();
+    kolZam();
   }
 
   if(clck.className == "edit") {
@@ -54,6 +55,7 @@ document.addEventListener('touchstart', function(event) {
       document.ontouchmove = null;
       if(l < -60) {
         elem.remove();
+        kolZam();
       } else {
         elem.style.left = "";
       }
@@ -102,6 +104,7 @@ document.body.querySelector('.vvod').addEventListener('click', function(event) {
     div.prepend(p);
     div.prepend(zag);
     zam.prepend(div);
+    kolZam();
     document.body.querySelector('.main-text').value = '';
     document.body.querySelector('.name').value = '';
   }
@@ -140,4 +143,14 @@ up.onclick = () => {
     if(document.body.querySelector('.vashi-zametki').scrollTop == 0) clearInterval(timer);
     else document.body.querySelector('.vashi-zametki').scrollBy(0, -40);
   }, 20);
+}
+
+function kolZam() {
+  let k = document.body.querySelectorAll('.zam').length;
+  if(k > 1)
+  i.textContent = k + " заметок";
+  if(k == 1)
+  i.textContent = k + " заметка";
+  if(k == 0)
+  i.textContent = '';
 }

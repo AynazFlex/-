@@ -16,6 +16,13 @@ body {
 
 .head-text {
   text-align: center;
+  margin-bottom: 0;
+}
+
+.kol-zam {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 30px;
 }
 
 .new-zametka {
