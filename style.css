@@ -1,7 +1,7 @@
 body {
-  box-sizing: border-box;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
   font-family: "Roboto", sans-serif;
 }
 
@@ -36,12 +36,17 @@ body {
   overflow-x: hidden;
 }
 
+.footer {
+  height: 10px;
+  width: 100%;
+}
+
 .zam {
   position: relative;
   margin-top: 10px;
   margin-left: 10px;
   margin-right: 10px;
-  height: 90px;
+  height: 80px;
   border-bottom: 2px solid black;
   background-color: white;
   overflow: hidden;
@@ -174,30 +179,12 @@ body {
   cursor: pointer;
 }
 
-@keyframes del {
-  from {
-    left: 0;
-  }
-  to {
-    left: -62px;
-  }
-}
-
-.anim {
-  animation-name: del;
-  animation-duration: 0.5s;
-}
-
-@keyframes rightto {
-  from {
-    left: 0;
-  }
-  to {
-    left: 62px;
-  }
-}
-
-.anim1 {
-  animation-name: rightto;
-  animation-duration: 0.5s;
+.up {
+  position: fixed;
+  display: none;
+  bottom: 65px;
+  right: 15px;
+  height: 50px;
+  width: 50px;
+  border-radius: 100%;
 }

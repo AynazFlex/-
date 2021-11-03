@@ -95,7 +95,7 @@ document.body.querySelector('.vvod').addEventListener('click', function(event) {
       zag.textContent = document.body.querySelector('.name').value;
     }
     p.innerHTML = document.body.querySelector('.main-text').value;
-    t.textContent = `Время ${date.getHours()}:${date.getMinutes()} Дата ${date.getFullYear()}.${date.getMonth()+1}.${date.getDate()}`;
+    t.textContent = `Время ${date.getHours() < 10 ? "0" + date.getHours(): date.getHours()}:${date.getMinutes() < 10 ? "0" + date.getMinutes():date.getMinutes()} Дата ${date.getFullYear()}.${date.getMonth()+1 < 10 ? "0" + date.getMonth()+1:date.getMonth()+1}.${date.getDate() < 10 ? "0" + date.getDate():date.getDate()}`;
     div.prepend(t);
     div.prepend(button);
     div.prepend(edit);
@@ -128,3 +128,16 @@ document.body.querySelector('.vvod-red').addEventListener('click', function(even
     document.body.querySelector('.vvod-red').style.display = 'none';
   }
 })
+
+document.body.querySelector('.vashi-zametki').onscroll = () => {
+  let elem = document.body.querySelector('.vashi-zametki');
+  if(elem.scrollTop >= elem.clientHeight/2) up.style.display = "block";
+  else up.style.display = "";
+}
+
+up.onclick = () => {
+  let timer = setInterval(() => {
+    if(document.body.querySelector('.vashi-zametki').scrollTop == 0) clearInterval(timer);
+    else document.body.querySelector('.vashi-zametki').scrollBy(0, -40);
+  }, 20);
+}
