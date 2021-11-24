@@ -2,13 +2,54 @@
 
 let elem1;
 
-document.body.querySelector('.vashi-zametki').addEventListener('click', addclick);
+let openBase = indexedDB.open("notesBase", 1);
+let db;
+
+openBase.onupgradeneeded = (event) => {
+  db = event.target.result;
+  if(!db.objectStoreNames.contains('notes')) {
+    db.createObjectStore('notes', {keyPath: 'id'});
+    alert("создана база данных для заметок");
+  }
+}
+
+openBase.onsuccess = (event) => {
+  db = event.target.result;
+  let zam = document.body.querySelector('.vashi-zametki');
+  let tran = db.transaction('notes', 'readwrite');
+  let Notes = tran.objectStore('notes');
+  let request = Notes.getAll();
+  request.onsuccess = () => {
+    for(let elem of request.result) {
+      let div = document.createElement('div');
+      div.classList.add('zam');
+      div.id = elem.id;
+      div.innerHTML = elem.HTMLcode;
+      zam.prepend(div);
+    }
+    kolZam();
+    document.body.querySelector('.vashi-zametki').addEventListener('click', addclick);
+    document.body.querySelector('.new-zametka').addEventListener('click', () => {
+      document.body.querySelector('.vvod').style.display = 'flex';
+      for(let elem of document.body.querySelectorAll('.zam')) {
+        elem.classList.remove('close-zam');
+        elem.querySelector('.delete').classList.add('close');
+        elem.querySelector('.edit').classList.add('close');
+      }
+    });
+  }
+}
+
+openBase.onerror = () => {
+  alert('перезагрузите страницу');
+}
 
 function addclick(event) {
   
   let clck = event.target;
 
   if(clck.className == 'delete') {
+    deleteBaseElem(clck.closest('.zam'));
     clck.closest('.zam').remove();
     kolZam();
   }
@@ -26,15 +67,6 @@ function addclick(event) {
     clck.closest('.zam').querySelector('.edit').classList.toggle('close');
   }
 };
-
-document.body.querySelector('.new-zametka').addEventListener('click', () => {
-  document.body.querySelector('.vvod').style.display = 'flex';
-  for(let elem of document.body.querySelectorAll('.zam')) {
-    elem.classList.remove('close-zam');
-    elem.querySelector('.delete').classList.add('close');
-    elem.querySelector('.edit').classList.add('close');
-  }
-});
 
 document.addEventListener('touchstart', function(event) {
   let x = event.changedTouches[0].clientX;
@@ -54,6 +86,7 @@ document.addEventListener('touchstart', function(event) {
     document.ontouchend = function() {
       document.ontouchmove = null;
       if(l < -60) {
+        deleteBaseElem(elem);
         elem.remove();
         kolZam();
       } else {
@@ -98,12 +131,24 @@ document.body.querySelector('.vvod').addEventListener('click', function(event) {
     }
     p.innerHTML = document.body.querySelector('.main-text').value;
     t.textContent = `Время ${date.getHours() < 10 ? "0" + date.getHours(): date.getHours()}:${date.getMinutes() < 10 ? "0" + date.getMinutes():date.getMinutes()} Дата ${date.getFullYear()}.${date.getMonth()+1 < 10 ? "0" + date.getMonth()+1:date.getMonth()+1}.${date.getDate() < 10 ? "0" + date.getDate():date.getDate()}`;
+    let timeForId = `${date.getFullYear()}${date.getMonth()}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}${date.getMilliseconds()}`;
     div.prepend(t);
     div.prepend(button);
     div.prepend(edit);
     div.prepend(p);
     div.prepend(zag);
+    div.id = timeForId;
     zam.prepend(div);
+    let obj = {
+      id: timeForId,
+      HTMLcode: div.innerHTML,
+    }
+    let tran = db.transaction('notes', 'readwrite');
+    let Notes = tran.objectStore('notes');
+    let addNote = Notes.put(obj);
+    addNote.onerror = () => {
+      Notes.add(obj);
+    }
     kolZam();
     document.body.querySelector('.main-text').value = '';
     document.body.querySelector('.name').value = '';
@@ -126,6 +171,17 @@ document.body.querySelector('.vvod-red').addEventListener('click', function(even
       elem1.querySelector('.zagg').textContent = document.body.querySelector('.name-red').value;
     }
     elem1.querySelector('.p-text').textContent = document.body.querySelector('.main-text-red').value;
+    let tran = db.transaction('notes', 'readwrite');
+    let Notes = tran.objectStore('notes');
+    elem1.querySelector('.delete').classList.add('close');
+    elem1.querySelector('.edit').classList.add('close');
+    let obj = {
+      id: elem1.id,
+      HTMLcode: elem1.innerHTML,
+    }
+    Notes.put(obj);
+    elem1.querySelector('.delete').classList.remove('close');
+    elem1.querySelector('.edit').classList.remove('close');
     document.body.querySelector('.name-red').value = '';
     document.body.querySelector('.main-text-red').value = '';
     document.body.querySelector('.vvod-red').style.display = 'none';
@@ -153,4 +209,10 @@ function kolZam() {
   i.textContent = k + " заметка";
   if(k == 0)
   i.textContent = '';
+}
+
+function deleteBaseElem(elem) {
+  let tran = db.transaction('notes', 'readwrite');
+  let Notes = tran.objectStore('notes');
+  Notes.delete(elem.id);
 }
