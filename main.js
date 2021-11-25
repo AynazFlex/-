@@ -2,18 +2,26 @@
 
 let elem1;
 
-let openBase = indexedDB.open("notesBase", 1);
+let openBase;
 let db;
 
-openBase.onupgradeneeded = (event) => {
-  db = event.target.result;
-  if(!db.objectStoreNames.contains('notes')) {
-    db.createObjectStore('notes', {keyPath: 'id'});
-    alert("создана база данных для заметок");
+let start  = new Promise((resolve) => {
+  window.onload = () => {
+    resolve();
   }
-}
+})
 
-openBase.onsuccess = (event) => {
+start.then(() => {
+  document.body.querySelector('.load-page').style.display = "none";
+  openBase = indexedDB.open("notesBase", 1);
+  openBase.onupgradeneeded = (event) => {
+      db = event.target.result;
+      if(!db.objectStoreNames.contains('notes')) {
+        db.createObjectStore('notes', {keyPath: 'id'});
+        alert("создана база данных для заметок");
+      }
+    }
+  openBase.onsuccess = (event) => {
   db = event.target.result;
   let zam = document.body.querySelector('.vashi-zametki');
   let tran = db.transaction('notes', 'readwrite');
@@ -38,11 +46,11 @@ openBase.onsuccess = (event) => {
       }
     });
   }
-}
+  }
 
-openBase.onerror = () => {
-  alert('перезагрузите страницу');
-}
+  openBase.onerror = () => {
+    alert('перезагрузите страницу');
+  }
 
 function addclick(event) {
   
@@ -216,3 +224,4 @@ function deleteBaseElem(elem) {
   let Notes = tran.objectStore('notes');
   Notes.delete(elem.id);
 }
+})
