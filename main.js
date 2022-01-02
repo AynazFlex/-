@@ -86,6 +86,9 @@ document.addEventListener('touchstart', function(event) {
       l = event.changedTouches[0].clientX - x;
       if(l < 0) {
         elem.style.left = l + 'px';
+      } 
+      if(l >= 0) {
+        elem.style.left = 0 + 'px';
       }
       if(l < -60) {
         elem.style.backgroundColor = 'red';
@@ -138,8 +141,8 @@ document.body.querySelector('.vvod').addEventListener('click', function(event) {
       zag.textContent = document.body.querySelector('.name').value;
     }
     p.innerHTML = document.body.querySelector('.main-text').value;
-    t.textContent = `Время ${date.getHours() < 10 ? "0" + date.getHours(): date.getHours()}:${date.getMinutes() < 10 ? "0" + date.getMinutes():date.getMinutes()} Дата ${date.getFullYear()}.${date.getMonth()+1 < 10 ? "0" + date.getMonth()+1:date.getMonth()+1}.${date.getDate() < 10 ? "0" + date.getDate():date.getDate()}`;
-    let timeForId = `${date.getFullYear()}${date.getMonth()}${date.getDate()}${date.getHours()}${date.getMinutes()}${date.getSeconds()}${date.getMilliseconds()}`;
+    t.textContent = `Время ${date.toLocaleTimeString().split(':').splice(0, 2).join(':')} Дата ${date.toLocaleDateString()}`;
+    let timeForId = `${date.toLocaleDateString().split('.').reverse().join('')}${date.toLocaleTimeString().split(':').join('')}`;
     div.prepend(t);
     div.prepend(button);
     div.prepend(edit);
