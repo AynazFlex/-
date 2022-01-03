@@ -94,20 +94,18 @@ body {
 
 .text-input,
 .text-input-red {
-  height: 100%;
-}
-
-.main-text,
-.main-text-red {
   padding: 10px;
   font-size: 14px;
   width: 100%;
   height: 100%;
-  border: none;
   border-top: 2px solid black;
-  outline: none;
+  background-color: white;
   box-sizing: border-box;
-  resize: none;
+}
+
+.text-input:focus,
+.text-input-red:focus {
+  border: none;
 }
 
 .otmen,
@@ -163,6 +161,7 @@ body {
 }
 
 .p-text {
+  margin-top: 16px;
   display: block;
   margin-bottom: 50px;
   padding: 10px;

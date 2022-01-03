@@ -65,7 +65,7 @@ function addclick(event) {
   if(clck.className == "edit") {
     document.body.querySelector('.vvod-red').style.display = 'flex';
     elem1 = clck.parentNode;
-    document.body.querySelector('.main-text-red').value = elem1.querySelector('.p-text').textContent;
+    document.body.querySelector('.text-input-red').innerHTML = elem1.querySelector('.p-text').innerHTML;
     document.body.querySelector('.name-red').value = elem1.querySelector('.zagg').textContent;
   }
 
@@ -124,7 +124,7 @@ document.body.querySelector('.vvod').addEventListener('click', function(event) {
     let button = document.createElement('img');
     let edit = document.createElement('img');
     let zag = document.createElement('h3');
-    let p = document.createElement('p');
+    let p = document.createElement('div');
     let t = document.createElement('span');
     t.classList.add('time');
     p.classList.add('p-text');
@@ -140,7 +140,7 @@ document.body.querySelector('.vvod').addEventListener('click', function(event) {
     } else {
       zag.textContent = document.body.querySelector('.name').value;
     }
-    p.innerHTML = document.body.querySelector('.main-text').value;
+    p.innerHTML = document.body.querySelector('.text-input').innerHTML;
     t.textContent = `Время ${date.toLocaleTimeString().split(':').splice(0, 2).join(':')} Дата ${date.toLocaleDateString()}`;
     let timeForId = `${date.toLocaleDateString().split('.').reverse().join('')}${date.toLocaleTimeString().split(':').join('')}`;
     div.prepend(t);
@@ -161,7 +161,7 @@ document.body.querySelector('.vvod').addEventListener('click', function(event) {
       Notes.add(obj);
     }
     kolZam();
-    document.body.querySelector('.main-text').value = '';
+    document.body.querySelector('.text-input').innerHTML = '';
     document.body.querySelector('.name').value = '';
   }
 })
@@ -171,7 +171,7 @@ document.body.querySelector('.vvod-red').addEventListener('click', function(even
 
   if(elem.className == 'otmen-red') {
     document.body.querySelector('.name-red').value = '';
-    document.body.querySelector('.main-text-red').value = '';
+    document.body.querySelector('.text-input-red').innerHTML = '';
     document.body.querySelector('.vvod-red').style.display = 'none';
   }
 
@@ -181,7 +181,7 @@ document.body.querySelector('.vvod-red').addEventListener('click', function(even
     } else {
       elem1.querySelector('.zagg').textContent = document.body.querySelector('.name-red').value;
     }
-    elem1.querySelector('.p-text').textContent = document.body.querySelector('.main-text-red').value;
+    elem1.querySelector('.p-text').innerHTML = document.body.querySelector('.text-input-red').innerHTML;
     let tran = db.transaction('notes', 'readwrite');
     let Notes = tran.objectStore('notes');
     elem1.querySelector('.delete').classList.add('close');
@@ -194,7 +194,7 @@ document.body.querySelector('.vvod-red').addEventListener('click', function(even
     elem1.querySelector('.delete').classList.remove('close');
     elem1.querySelector('.edit').classList.remove('close');
     document.body.querySelector('.name-red').value = '';
-    document.body.querySelector('.main-text-red').value = '';
+    document.body.querySelector('.text-input-red').innerHTML = '';
     document.body.querySelector('.vvod-red').style.display = 'none';
   }
 })
