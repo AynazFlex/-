@@ -190,6 +190,7 @@ document.body.querySelector('.vvod-red').addEventListener('click', function(even
     let Notes = tran.objectStore('notes');
     elem1.querySelector('.delete').classList.add('close');
     elem1.querySelector('.edit').classList.add('close');
+    elem1.querySelector('.p-text').classList.add('close');
     let obj = {
       id: elem1.id,
       HTMLcode: elem1.innerHTML,
@@ -197,6 +198,7 @@ document.body.querySelector('.vvod-red').addEventListener('click', function(even
     Notes.put(obj);
     elem1.querySelector('.delete').classList.remove('close');
     elem1.querySelector('.edit').classList.remove('close');
+    elem1.querySelector('.p-text').classList.remove('close');
     document.body.querySelector('.name-red').value = '';
     document.body.querySelector('.text-input-red').innerHTML = '';
     document.body.querySelector('.vvod-red').style.display = 'none';
