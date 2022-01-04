@@ -41,6 +41,7 @@ start.then(() => {
       document.body.querySelector('.vvod').style.display = 'flex';
       for(let elem of document.body.querySelectorAll('.zam')) {
         elem.classList.remove('close-zam');
+        elem.style.left = '';
         elem.querySelector('.delete').classList.add('close');
         elem.querySelector('.edit').classList.add('close');
       }
@@ -56,7 +57,7 @@ function addclick(event) {
   
   let clck = event.target;
 
-  if(clck.className == 'delete') {
+  if(clck.className == 'delete' || clck.closest('.block')) {
     deleteBaseElem(clck.closest('.zam'));
     clck.closest('.zam').remove();
     kolZam();
@@ -70,9 +71,11 @@ function addclick(event) {
   }
 
   if(clck.closest('.zam') && !(clck.className == "edit")) {
+    clck.closest('.zam').style.left = 0;
     clck.closest('.zam').classList.toggle('close-zam');
     clck.closest('.zam').querySelector('.delete').classList.toggle('close');
     clck.closest('.zam').querySelector('.edit').classList.toggle('close');
+    clck.closest('.zam').querySelector('.p-text').classList.toggle('close');
   }
 };
 
@@ -86,22 +89,18 @@ document.addEventListener('touchstart', function(event) {
       l = event.changedTouches[0].clientX - x;
       if(l < 0) {
         elem.style.left = l + 'px';
-      } 
-      if(l >= 0) {
-        elem.style.left = 0 + 'px';
       }
-      if(l < -60) {
-        elem.style.backgroundColor = 'red';
-      } else elem.style.backgroundColor = "";
+      if(l >= 0) {
+        elem.style.left = 0;
+      }
+      if(l <= -80) {
+        elem.style.left = -80 + 'px';
+      }
     }
     document.ontouchend = function() {
       document.ontouchmove = null;
-      if(l < -60) {
-        deleteBaseElem(elem);
-        elem.remove();
-        kolZam();
-      } else {
-        elem.style.left = "";
+      if(l > -80) {
+        elem.style.left = 0;
       }
     }
   }
@@ -126,13 +125,17 @@ document.body.querySelector('.vvod').addEventListener('click', function(event) {
     let zag = document.createElement('h3');
     let p = document.createElement('div');
     let t = document.createElement('span');
+    let divDelete = document.createElement('div');
+    divDelete.innerHTML = `<img src="delete.svg" class="for-img-delete"></img>`
     t.classList.add('time');
     p.classList.add('p-text');
+    p.classList.add('close');
     zag.classList.add('zagg');
     button.classList.add('delete');
     button.classList.add('close');
     edit.classList.add('edit');
     edit.classList.add('close');
+    divDelete.classList.add('block');
     edit.src = 'edit.svg';
     button.src = 'delete.svg';
     if(document.body.querySelector('.name').value == '') {
@@ -143,6 +146,7 @@ document.body.querySelector('.vvod').addEventListener('click', function(event) {
     p.innerHTML = document.body.querySelector('.text-input').innerHTML;
     t.textContent = `Время ${date.toLocaleTimeString().split(':').splice(0, 2).join(':')} Дата ${date.toLocaleDateString()}`;
     let timeForId = `${date.toLocaleDateString().split('.').reverse().join('')}${date.toLocaleTimeString().split(':').join('')}`;
+    div.prepend(divDelete)
     div.prepend(t);
     div.prepend(button);
     div.prepend(edit);
