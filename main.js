@@ -44,6 +44,7 @@ start.then(() => {
         elem.style.left = '';
         elem.querySelector('.delete').classList.add('close');
         elem.querySelector('.edit').classList.add('close');
+        elem.querySelector('.p-text').classList.add('close');
       }
     });
   }
@@ -85,6 +86,8 @@ document.addEventListener('touchstart', function(event) {
   let l;
   if(down.closest('.zam')) {
     let elem = down.closest('.zam');
+    console.log(parseInt(elem.style.left));
+    if(elem.className === 'zam close-zam') return;
     document.ontouchmove = function(event) {
       l = event.changedTouches[0].clientX - x;
       if(l < 0) {
