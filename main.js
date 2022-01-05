@@ -81,12 +81,12 @@ function addclick(event) {
 };
 
 document.addEventListener('touchstart', function(event) {
+  event.stopPropagation();
   let x = event.changedTouches[0].clientX;
   let down = event.target;
   let l;
   if(down.closest('.zam')) {
     let elem = down.closest('.zam');
-    console.log(parseInt(elem.style.left));
     if(elem.className === 'zam close-zam') return;
     document.ontouchmove = function(event) {
       l = event.changedTouches[0].clientX - x;
