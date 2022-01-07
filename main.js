@@ -88,21 +88,46 @@ document.addEventListener('touchstart', function(event) {
   if(down.closest('.zam')) {
     let elem = down.closest('.zam');
     if(elem.className === 'zam close-zam') return;
-    document.ontouchmove = function(event) {
-      l = event.changedTouches[0].clientX - x;
-      if(l < 0) {
-        elem.style.left = l + 'px';
+    if(elem.style.left == "-80px") {
+      document.ontouchmove = function(event) {
+        l = event.changedTouches[0].clientX - x;
+        if(l > 0) {
+          elem.style.left = -80 + l + 'px';
+        }
+        if(parseInt(elem.style.left) >= 0) {
+          elem.style.left = 0;
+          x = event.changedTouches[0].clientX;
+          document.ontouchmove = function(event) {
+            l = event.changedTouches[0].clientX - x;
+            if(l < 0) {
+              elem.style.left = l + 'px';
+            }
+            if(l >= 0) {
+              elem.style.left = 0;
+            }
+            if(l <= -80) {
+              elem.style.left = -80 + 'px';
+            }
+          }
+        }
       }
-      if(l >= 0) {
-        elem.style.left = 0;
-      }
-      if(l <= -80) {
-        elem.style.left = -80 + 'px';
+    } else {
+      document.ontouchmove = function(event) {
+        l = event.changedTouches[0].clientX - x;
+        if(l < 0) {
+          elem.style.left = l + 'px';
+        }
+        if(l >= 0) {
+          elem.style.left = 0;
+        }
+        if(l <= -80) {
+          elem.style.left = -80 + 'px';
+        }
       }
     }
     document.ontouchend = function() {
       document.ontouchmove = null;
-      if(l > -80) {
+      if(i > -80) {
         elem.style.left = 0;
       }
     }
