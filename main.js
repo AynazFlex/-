@@ -127,7 +127,7 @@ document.addEventListener('touchstart', function(event) {
     }
     document.ontouchend = function() {
       document.ontouchmove = null;
-      if(i > -80) {
+      if(l > -80) {
         elem.style.left = 0;
       }
     }
