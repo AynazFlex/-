@@ -31,6 +31,7 @@ start.then(() => {
     for(let elem of request.result) {
       let div = document.createElement('div');
       div.classList.add('zam');
+      div.style.left = '0px';
       div.id = elem.id;
       div.innerHTML = elem.HTMLcode;
       zam.prepend(div);
@@ -41,7 +42,7 @@ start.then(() => {
       document.body.querySelector('.vvod').style.display = 'flex';
       for(let elem of document.body.querySelectorAll('.zam')) {
         elem.classList.remove('close-zam');
-        elem.style.left = '';
+        elem.style.left = 0;
         elem.querySelector('.delete').classList.add('close');
         elem.querySelector('.edit').classList.add('close');
         elem.querySelector('.p-text').classList.add('close');
@@ -81,55 +82,35 @@ function addclick(event) {
 };
 
 document.addEventListener('touchstart', function(event) {
-  event.stopPropagation();
   let x = event.changedTouches[0].clientX;
+  let y = event.changedTouches[0].clientY;
   let down = event.target;
   let l;
   if(down.closest('.zam')) {
     let elem = down.closest('.zam');
     if(elem.className === 'zam close-zam') return;
-    if(elem.style.left == "-80px") {
-      document.ontouchmove = function(event) {
-        l = event.changedTouches[0].clientX - x;
-        if(l > 0) {
-          elem.style.left = -80 + l + 'px';
-        }
-        if(parseInt(elem.style.left) >= 0) {
-          elem.style.left = 0;
-          x = event.changedTouches[0].clientX;
-          document.ontouchmove = function(event) {
-            l = event.changedTouches[0].clientX - x;
-            if(l < 0) {
-              elem.style.left = l + 'px';
-            }
-            if(l >= 0) {
-              elem.style.left = 0;
-            }
-            if(l <= -80) {
-              elem.style.left = -80 + 'px';
-            }
-          }
-        }
-      }
-    } else {
-      document.ontouchmove = function(event) {
-        l = event.changedTouches[0].clientX - x;
-        if(l < 0) {
-          elem.style.left = l + 'px';
-        }
-        if(l >= 0) {
-          elem.style.left = 0;
-        }
-        if(l <= -80) {
-          elem.style.left = -80 + 'px';
+    document.ontouchmove = event => {
+      let xMove = event.targetTouches[0].clientX - x;
+      let yMove = event.targetTouches[0].clientY - y;
+      if(Math.abs(yMove)/Math.abs(xMove) > 0.4) {
+        document.ontouchmove = null;
+        document.ontouchend = null;
+      } else {
+        document.body.querySelector('.vashi-zametki').addEventListener('scroll', preventDefault, {passive: false})
+        let leftStart = parseInt(elem.style.left);
+        x = event.changedTouches[0].clientX;
+        document.ontouchmove = event => {
+          l = event.changedTouches[0].clientX - x;
+          elem.style.left = leftStart + l + 'px';
         }
       }
     }
     document.ontouchend = function() {
       document.ontouchmove = null;
-      if(l > -80) {
-        elem.style.left = 0;
-      }
+      if(l < 0) {
+        elem.style.left = '-80px';
+      } else elem.style.left = 0;
+      document.body.querySelector('.vashi-zametki').removeEventListener('scroll', preventDefault, {passive: false})
     }
   }
 
@@ -154,6 +135,7 @@ document.body.querySelector('.vvod').addEventListener('click', function(event) {
     let p = document.createElement('div');
     let t = document.createElement('span');
     let divDelete = document.createElement('div');
+    div.style.left = '0px';
     divDelete.innerHTML = `<img src="delete.svg" class="for-img-delete"></img>`
     t.classList.add('time');
     p.classList.add('p-text');
@@ -262,3 +244,7 @@ function deleteBaseElem(elem) {
   Notes.delete(elem.id);
 }
 })
+
+function preventDefault(e) {
+  e.preventDefault();
+}
