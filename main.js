@@ -109,7 +109,7 @@ document.addEventListener('touchstart', function(event) {
       document.ontouchmove = null;
       if(l < 0) {
         elem.style.left = '-80px';
-      } else elem.style.left = 0;
+      } else if(l > 0) elem.style.left = 0;
       document.body.querySelector('.vashi-zametki').removeEventListener('scroll', preventDefault, {passive: false})
     }
   }
